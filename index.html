@@ -1,61 +1,81 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./app.css" />
     <title>Vision Point - Price List</title>
-    <meta charset="utf-8" />
   </head>
-
   <body>
     <div class="container">
-      <h1 id="test">Vision Point<small> Price List</small></h1>
+      <h1 id="test" class="lead">Vision Point</h1>
+      <h2 class="text-center">Price List</h2>
       <div class="jumbotron">
-        <form class="inputForm">
-          <h3>Information</h3>
-          <br />
-          <div class="form-group">
-            <label for="lensLabel">Type of Lense: </label>
+        <form class="inputForm my-2">
+          <div id="selectbar"></div>
+          <div class="form-group" id="lense-group">
+            <label for="lensLabel" class="label">Type of Lense: </label>
+            <br />
             <select id="lens" name="lens" class="form-control">
               <option value="default" selected>Select Option</option>
             </select>
+            <br />
+            <button type="submit" id="lenseN" class="btn">Next</button>
           </div>
-          <div class="form-group">
-            <label for="powerLabel">Power: </label>
+
+          <div class="form-group" id="power-group">
+            <label for="powerLabel" class="label">Power: </label>
+            <br />
             <select id="power" name="power" class="form-control">
               <option value="default" selected
                 >Fill Previous Dropdown First</option
               >
             </select>
+            <br />
+            <button type="submit" id="powerN" class="btn">Next</button>
+            <button type="submit" id="powerP" class="btn">Previous</button>
           </div>
-          <div class="form-group">
-            <label for="type1">Type: </label>
+
+          <div class="form-group" id="type1-group">
+            <label for="type1" class="label">Type: </label>
+            <br />
             <select id="type1" name="type" class="form-control">
               <option value="default" selected
                 >Fill Previous Dropdown First</option
               >
             </select>
+            <br />
+            <button type="submit" id="type1N" class="btn">Next</button>
+            <button type="submit" id="type1P" class="btn">Previous</button>
           </div>
-          <div class="form-group">
-            <label for="type2">Type: </label>
+
+          <div class="form-group" id="type2-group">
+            <label for="type2" class="label">Type: </label>
+            <br />
             <select id="type2" name="type" class="form-control">
               <option value="default" selected
                 >Fill Previous Dropdown First</option
               >
             </select>
+            <br />
+            <button type="submit" id="type2N" class="btn">Next</button>
+            <button type="submit" id="type2P" class="btn">Previous</button>
           </div>
-          <div class="form-group">
-            <label for="type3">Type: </label>
+
+          <div class="form-group" id="type3-group">
+            <label for="type3" class="label">Type: </label>
+            <br />
             <select id="type3" name="type" class="form-control">
               <option value="default" selected
                 >Fill Previous Dropdown First</option
               >
             </select>
+            <br />
+            <button type="submit" id="type3P" class="btn">Previous</button>
           </div>
+
           <div class="form-group">
-            <br />
-            <h3 id="breadcrump"></h3>
-            <br />
-            <h1 id="priceSection"></h1>
+            <h1 id="priceSection" class="my-1 text-center"></h1>
           </div>
         </form>
       </div>
@@ -84,8 +104,8 @@
             for (let i = 1; i < data[0].length; i++) {
               data[0][i]
                 ? $("#lens").append(`<option value="${i}"> 
-                                        ${data[0][i]} 
-                                    </option>`)
+                                    ${data[0][i]} 
+                                </option>`)
                 : "";
             }
             //clear  dd  before adding new values to dd and add default value
@@ -98,8 +118,8 @@
             var x = 4;
             power.forEach((e) => {
               $("#power").append(`<option value="${x}"> 
-                            ${e} 
-                        </option>`);
+                        ${e} 
+                    </option>`);
               x++;
             });
             //populate further dropdowns according to this value
@@ -116,8 +136,8 @@
                 for (let i = 1; i < data[1].length; i++) {
                   data[1][i]
                     ? $("#type1").append(`<option value="${i}"> 
-                                                ${data[1][i]} 
-                                            </option>`)
+                                            ${data[1][i]} 
+                                        </option>`)
                     : "";
                 }
                 //whenever type1 dd changes reset  type2 dd
@@ -138,8 +158,8 @@
                   for (let i = $("#type1").val(); i < type1EndVal; i++) {
                     data[2][i]
                       ? $("#type2").append(`<option value="${i}"> 
-                                                ${data[2][i]} 
-                                            </option>`)
+                                            ${data[2][i]} 
+                                        </option>`)
                       : "";
                   }
                   $("#type2").change(function () {
@@ -162,8 +182,8 @@
                     for (let i = $("#type2").val(); i < type2EndVal; i++) {
                       data[3][i]
                         ? $("#type3").append(`<option value="${i}"> 
-                                                    ${data[3][i]} 
-                                                </option>`)
+                                                ${data[3][i]} 
+                                            </option>`)
                         : "";
                     }
                     $("#type3").change(function () {
@@ -193,5 +213,6 @@
         });
       });
     </script>
+    <script src="./app.js"></script>
   </body>
 </html>
