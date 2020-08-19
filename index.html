@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Vision Point - Price List</title>
+        <meta charset="utf-8" />
+        <link href="css/bootstrap.min.css" rel="stylesheet"></link>        
+        <script src="bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container">    
+            <h1  id="test">Vision Point<small> Price List</small> </h1>
+            <div class="jumbotron ">
+                <form class="inputForm">
+                    <h3>Information</h3><br>
+                    <div class="form-group">
+                        <label for="lensLabel">Type of Lense: </label>
+                        <select id="lens" name="lens" class="form-control">
+                            <option value="default" selected>Select Option</option>
+                        </select>                        
+                    </div>
+                    <div class="form-group">
+                        <label for="powerLabel">Power: </label>
+                        <select id="power" name="power" class="form-control">
+                            <option value="default" selected>Fill Previous Dropdown First</option>
+                        </select>  
+                    </div>
+                    <div class="form-group">
+                        <label for="type1">Type: </label>
+                        <select id="type1" name="type" class="form-control">
+                            <option value="default" selected>Fill Previous Dropdown First</option>                            
+                        </select>  
+                    </div>
+                    <div class="form-group">
+                        <label for="type2">Type: </label>
+                        <select id="type2" name="type" class="form-control">
+                            <option value="default" selected>Fill Previous Dropdown First</option>   
+                        </select>  
+                    </div>
+                    <div class="form-group">
+                        <label for="type3">Type: </label>
+                        <select id="type3" name="type" class="form-control">
+                            <option value="default" selected>Fill Previous Dropdown First</option> 
+                        </select>  
+                    </div>
+                    <div class="form-group">
+                        <br>
+                        <h3 id="breadcrump"></h3>
+                        <br>
+                        <h1 id="priceSection"></h1>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="jquery.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $.ajax({
+                url:"pricelist.csv",
+                dataType:"text",
+                success:function(data)
+                {
+                    var priceRow = data.split(/\r?\n|\r/);
+                    var cell,count;
+                    var data= new Array();
+                    var power= new Array();
+                    // function to create array of arrays
+                    for (count = 0; count < priceRow.length; count++) {
+                        cell= priceRow[count].split(",")
+                        data.push(cell)
+                        if(count>=4 && cell[0]){
+                            power.push(cell[0])
+                        }                        
+                    }
+                    console.log(data)
+                    //populate lenses option like single/bifocal
+                    for (let i = 1; i < data[0].length; i++) {                   
+                        data[0][i]?$('#lens').append(`<option value="${i}"> 
+                                        ${data[0][i]} 
+                                    </option>`):"" 
+                    }
+                    //clear  dd  before adding new values to dd and add default value
+                    $('#power').empty().append(`<option value="default" selected>Select Option</option>`);
+                    //populate power dd
+                    var x=4;
+                    power.forEach(e=>{
+                        $('#power').append(`<option value="${x}"> 
+                            ${e} 
+                        </option>`)
+                        x++;
+                    })
+                    //populate further dropdowns according to this value
+                    $('#lens').change(function(){
+                        //val 1 for single power
+                        if($('#lens').val()==1){
+                            //clear dd type1 dd 
+                            $('#type1').empty().append(`<option value="default" selected>Select Option</option>`);
+                            //populate dd type1 white/photocromatic
+                            for (let i = 1; i < data[1].length; i++) {                   
+                                data[1][i]?$('#type1').append(`<option value="${i}"> 
+                                                ${data[1][i]} 
+                                            </option>`):"" 
+                            }
+                            //whenever type1 dd changes reset  type2 dd
+                            $('#type1').change(function(){
+                                var type1EndVal;
+                                $('#type2').empty().append(`<option value="default" selected>Select Option</option>`);
+                                //set type2 dd values on the basis of type1 values
+                                if($('#type1').val()==1){
+                                    type1EndVal=7;
+                                } else if($('#type1').val()==25){
+                                    type1EndVal=31;
+                                }
+                                //populate  dd2
+                                for (let i = $('#type1').val(); i < type1EndVal; i++) {                   
+                                data[2][i]?$('#type2').append(`<option value="${i}"> 
+                                                ${data[2][i]} 
+                                            </option>`):"" 
+                                }
+                                $('#type2').change(function(){
+                                    $('#type3').empty().append(`<option value="default" selected>Select Option</option>`);
+                                    var type2EndVal;
+                                    if($('#type2').val()==1){
+                                        type2EndVal=6;
+                                    } else if($('#type2').val()==6){
+                                        type2EndVal=25;
+                                    }else if($('#type2').val()==25){
+                                        type2EndVal=30;
+                                    }else if($('#type2').val()==30){
+                                        type2EndVal=45;
+                                    }
+                                    //populate  dd  type 3
+                                    for (let i = $('#type2').val(); i < type2EndVal; i++) {                   
+                                    data[3][i]?$('#type3').append(`<option value="${i}"> 
+                                                    ${data[3][i]} 
+                                                </option>`):"" 
+                                    }
+                                    $('#type3').change(function(){
+                                        $('#breadcrump').text(
+                                            $('#lens option:selected').text()+" > "+$('#power option:selected').text()+" > "+$('#type1 option:selected').text()+" > "+$('#type2 option:selected').text()+" > "+$('#type3 option:selected').text()
+                                        )
+
+                                        $('#priceSection').text(data[$('#power').val()][$('#type3').val()]?
+                                        data[$('#power').val()][$('#type3').val()]:
+                                        "NO Data Available")
+                                    })
+                                    
+                                })
+                            })
+                        }                           
+                    })
+                }
+            });
+        });
+    </script>
+    </body>
+</html>
