@@ -10,6 +10,7 @@ const lenseN = document.querySelector("#lenseN");
 const powerN = document.querySelector("#powerN");
 const type1N = document.querySelector("#type1N");
 const type2N = document.querySelector("#type2N");
+const result = document.querySelector("#result");
 
 // Prev Buttons
 const powerP = document.querySelector("#powerP");
@@ -35,7 +36,8 @@ type2N.addEventListener("click", showT3);
 powerP.addEventListener("click", showLG);
 type1P.addEventListener("click", showPG);
 type2P.addEventListener("click", showT1);
-type3P.addEventListener("click", showT2);
+result.addEventListener("click", showPrice);
+type3P.addEventListener("click", resetForm1);
 
 function showAlert() {
   const div = document.createElement("div");
@@ -90,7 +92,7 @@ function showT1(e) {
 
     selectbar.innerHTML = `<span class="category first">${
       lens.options[lens.selectedIndex].text
-    }</span> <i class="fas fa-caret-right"></i> <span class="category second">${
+    }</span> <i class="fas fa-caret-right" style="color: #0396ff;"></i> <span class="category second">${
       power.options[power.selectedIndex].text
     }</span>`;
   } else {
@@ -110,9 +112,9 @@ function showT2(e) {
 
     selectbar.innerHTML = `<span class="category first">${
       lens.options[lens.selectedIndex].text
-    }</span> <i class="fas fa-caret-right"></i> <span class="category second">${
+    }</span> <i class="fas fa-caret-right" style="color: #0396ff;"></i> <span class="category second">${
       power.options[power.selectedIndex].text
-    }</span> <i class="fas fa-caret-right"></i> <span class="category third">${
+    }</span> <i class="fas fa-caret-right" style="color: #0396ff;"></i> <span class="category third">${
       type1s.options[type1s.selectedIndex].text
     }</span>`;
 
@@ -134,18 +136,52 @@ function showT3(e) {
 
     selectbar.innerHTML = `<span class="category first">${
       lens.options[lens.selectedIndex].text
-    }</span> <i class="fas fa-caret-right"></i> <span class="category second">${
+    }</span> <i class="fas fa-caret-right" style="color: #0396ff;"></i> <span class="category second">${
       power.options[power.selectedIndex].text
-    }</span> <i class="fas fa-caret-right"></i> <span class="category third">${
+    }</span> <i class="fas fa-caret-right" style="color: #0396ff;"></i> <span class="category third">${
       type1s.options[type1s.selectedIndex].text
-    }</span> <i class="fas fa-caret-right"></i> <span class="category fourth">${
+    }</span> <i class="fas fa-caret-right" style="color: #0396ff;"></i> <span class="category fourth">${
       type2s.options[type2s.selectedIndex].text
     }</span>`;
-
-    document.querySelector("#priceSection").style.display = "block";
   } else {
     showAlert();
   }
 
+  e.preventDefault();
+}
+
+function resetForm1(e) {
+  lenseGroup.style.display = "block";
+  powerGroup.style.display = "none";
+  type1.style.display = "none";
+  type2.style.display = "none";
+  type3.style.display = "none";
+
+  selectbar.innerHTML = "";
+
+  document.querySelector("#priceSection").style.display = "none";
+  result.style.display = "block";
+  document.querySelector("#hide").style.display = "block";
+  type3P.style.display = "none";
+
+  type3s.selectedIndex = 0;
+  type2s.selectedIndex = 0;
+  type1s.selectedIndex = 0;
+  power.selectedIndex = 0;
+  lens.selectedIndex = 0;
+
+  e.preventDefault();
+}
+
+function showPrice(e) {
+  if (type3s.options[type3s.selectedIndex].text !== "Select Option") {
+    document.querySelector("#priceSection").style.display = "block";
+
+    result.style.display = "none";
+    document.querySelector("#hide").style.display = "none";
+    type3P.style.display = "block";
+  } else {
+    showAlert();
+  }
   e.preventDefault();
 }
