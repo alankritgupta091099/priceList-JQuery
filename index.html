@@ -8,16 +8,21 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="./app.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
     <title>Vision Point - Price List</title>
   </head>
   <body>
     <div class="container">
       <h1 id="test" class="lead">
-        <i class="fas fa-glasses"></i> Vision Point
+        <img
+          src="./img/glasses-solid.svg"
+          width="60px"
+          style="margin-bottom: -5px;"
+        />
+        Vision Point
       </h1>
       <div class="jumbotron">
         <form class="inputForm my-1" id="main-form">
-          <img src="./img/blinking-eyes.gif" height="100px" />
           <h2 class="text-center" style="margin-bottom: 1rem;">Price List</h2>
           <div id="selectbar"></div>
           <div class="form-group" id="lense-group">
@@ -70,15 +75,21 @@
           </div>
 
           <div class="form-group" id="type3-group">
-            <label for="type3" class="label">Type: </label>
-            <br />
-            <select id="type3" name="type" class="form-control">
-              <option value="default" selected
-                >Fill Previous Dropdown First</option
-              >
-            </select>
-            <br />
-            <button type="submit" id="type3P" class="btn">Previous</button>
+            <div id="hide">
+              <label for="type3" class="label">Type: </label>
+              <br />
+              <select id="type3" name="type" class="form-control">
+                <option value="default" selected
+                  >Fill Previous Dropdown First</option
+                >
+              </select>
+            </div>
+            <button type="submit" id="result" class="btn">
+              Show Price
+            </button>
+            <button type="submit" id="type3P" class="btn">
+              Try a different lense
+            </button>
           </div>
 
           <div class="form-group">
@@ -207,8 +218,8 @@
                       );
 
                       $("#priceSection").text(
-                        data[$("#power").val()][$("#type3").val()]
-                          ? data[$("#power").val()][$("#type3").val()]
+                        "Rs. " + data[$("#power").val()][$("#type3").val()]
+                          ? "Rs. " + data[$("#power").val()][$("#type3").val()]
                           : "NO Data Available"
                       );
                     });
