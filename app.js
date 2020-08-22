@@ -37,6 +37,19 @@ type1P.addEventListener("click", showPG);
 type2P.addEventListener("click", showT1);
 type3P.addEventListener("click", showT2);
 
+function showAlert() {
+  const div = document.createElement("div");
+  div.className = `alert text-center my-1`;
+  div.appendChild(document.createTextNode("Please choose an option"));
+  const container = document.querySelector("#main-form");
+  const form = document.querySelector("#selectbar");
+  container.insertBefore(div, form);
+
+  setTimeout(function () {
+    document.querySelector(".alert").remove();
+  }, 2000);
+}
+
 function showLG(e) {
   lenseGroup.style.display = "block";
   powerGroup.style.display = "none";
@@ -50,57 +63,89 @@ function showLG(e) {
 }
 
 function showPG(e) {
-  lenseGroup.style.display = "none";
-  powerGroup.style.display = "block";
-  type1.style.display = "none";
-  type2.style.display = "none";
-  type3.style.display = "none";
+  if (lens.options[lens.selectedIndex].text !== "Select Option") {
+    lenseGroup.style.display = "none";
+    powerGroup.style.display = "block";
+    type1.style.display = "none";
+    type2.style.display = "none";
+    type3.style.display = "none";
 
-  selectbar.innerHTML = `${lens.options[lens.selectedIndex].text}`;
+    selectbar.innerHTML = `<span class="category first">${
+      lens.options[lens.selectedIndex].text
+    }</span>`;
+  } else {
+    showAlert();
+  }
 
   e.preventDefault();
 }
 
 function showT1(e) {
-  lenseGroup.style.display = "none";
-  powerGroup.style.display = "none";
-  type1.style.display = "block";
-  type2.style.display = "none";
-  type3.style.display = "none";
+  if (power.options[power.selectedIndex].text !== "Select Option") {
+    lenseGroup.style.display = "none";
+    powerGroup.style.display = "none";
+    type1.style.display = "block";
+    type2.style.display = "none";
+    type3.style.display = "none";
 
-  selectbar.innerHTML = `${lens.options[lens.selectedIndex].text} > ${
-    power.options[power.selectedIndex].text
-  }`;
+    selectbar.innerHTML = `<span class="category first">${
+      lens.options[lens.selectedIndex].text
+    }</span> <i class="fas fa-caret-right"></i> <span class="category second">${
+      power.options[power.selectedIndex].text
+    }</span>`;
+  } else {
+    showAlert();
+  }
 
   e.preventDefault();
 }
 
 function showT2(e) {
-  lenseGroup.style.display = "none";
-  powerGroup.style.display = "none";
-  type1.style.display = "none";
-  type2.style.display = "block";
-  type3.style.display = "none";
+  if (type1s.options[type1s.selectedIndex].text !== "Select Option") {
+    lenseGroup.style.display = "none";
+    powerGroup.style.display = "none";
+    type1.style.display = "none";
+    type2.style.display = "block";
+    type3.style.display = "none";
 
-  selectbar.innerHTML = `${lens.options[lens.selectedIndex].text} > ${
-    power.options[power.selectedIndex].text
-  } > ${type1s.options[type1s.selectedIndex].text}`;
+    selectbar.innerHTML = `<span class="category first">${
+      lens.options[lens.selectedIndex].text
+    }</span> <i class="fas fa-caret-right"></i> <span class="category second">${
+      power.options[power.selectedIndex].text
+    }</span> <i class="fas fa-caret-right"></i> <span class="category third">${
+      type1s.options[type1s.selectedIndex].text
+    }</span>`;
+
+    document.querySelector("#priceSection").style.display = "none";
+  } else {
+    showAlert();
+  }
 
   e.preventDefault();
 }
 
 function showT3(e) {
-  lenseGroup.style.display = "none";
-  powerGroup.style.display = "none";
-  type1.style.display = "none";
-  type2.style.display = "none";
-  type3.style.display = "block";
+  if (type2s.options[type2s.selectedIndex].text !== "Select Option") {
+    lenseGroup.style.display = "none";
+    powerGroup.style.display = "none";
+    type1.style.display = "none";
+    type2.style.display = "none";
+    type3.style.display = "block";
 
-  selectbar.innerHTML = `${lens.options[lens.selectedIndex].text} > ${
-    power.options[power.selectedIndex].text
-  } > ${type1s.options[type1s.selectedIndex].text} > ${
-    type2s.options[type2s.selectedIndex].text
-  }`;
+    selectbar.innerHTML = `<span class="category first">${
+      lens.options[lens.selectedIndex].text
+    }</span> <i class="fas fa-caret-right"></i> <span class="category second">${
+      power.options[power.selectedIndex].text
+    }</span> <i class="fas fa-caret-right"></i> <span class="category third">${
+      type1s.options[type1s.selectedIndex].text
+    }</span> <i class="fas fa-caret-right"></i> <span class="category fourth">${
+      type2s.options[type2s.selectedIndex].text
+    }</span>`;
+
+    document.querySelector("#priceSection").style.display = "block";
+  } else {
+    showAlert();
+  }
 
   e.preventDefault();
 }
